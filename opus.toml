@@ -1,0 +1,12 @@
+# The index of the XQ package registry (https://github.com/akainq/xq-packages), made by tools/build.py from packages/opus.toml.
+
+name = "opus"
+repository = "https://github.com/akainq/xq-opus"
+description = "Speech in Opus through libopus: 20 ms frames of 48 kHz mono, in-band forward error correction, lost packets made up"
+license = "MIT OR Apache-2.0"
+
+[[version]]
+version = "0.1.0"
+commit = "9a9d8da608a65a4f5336770975b45901d350b819"
+date = "2026-10-05"
+xq = "0.10"

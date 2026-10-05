@@ -1,0 +1,12 @@
+# The index of the XQ package registry (https://github.com/akainq/xq-packages), made by tools/build.py from packages/rnnoise.toml.
+
+name = "rnnoise"
+repository = "https://github.com/akainq/xq-rnnoise"
+description = "Noise suppression with RNNoise: noise out of speech, 10 ms at a time, and how likely each 10 ms are speech"
+license = "MIT OR Apache-2.0"
+
+[[version]]
+version = "0.1.0"
+commit = "da1188cb081e05a4099037425e8ab8ed86c1cedf"
+date = "2026-10-05"
+xq = "0.10"

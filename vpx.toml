@@ -1,0 +1,12 @@
+# The index of the XQ package registry (https://github.com/akainq/xq-packages), made by tools/build.py from packages/vpx.toml.
+
+name = "vpx"
+repository = "https://github.com/akainq/xq-vpx"
+description = "VP8 video through libvpx: a real-time encoder for calls and a decoder, of I420 frames"
+license = "MIT OR Apache-2.0"
+
+[[version]]
+version = "0.1.0"
+commit = "c8d45a9571ab66f8b4939b9ae10590e4e4980c36"
+date = "2026-10-05"
+xq = "0.10"
