@@ -505,7 +505,11 @@ class Readme:
         while u.startswith("./"):
             u = u[2:]
         base = self.raw if image else self.blob
-        return base + u.lstrip("/") if base else None
+        if not base:
+            return None
+        u = base + u.lstrip("/")
+        # raw.githubusercontent.com gives an SVG as an image only when asked to sanitize it.
+        return u + "?sanitize=true" if image and u.lower().endswith(".svg") else u
 
     def inline(self, s):
         parts = re.split(r"(`+)(.+?)\1", s)
