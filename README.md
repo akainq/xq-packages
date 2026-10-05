@@ -27,7 +27,8 @@ accepts. More in [the reference](https://akainq.github.io/xq/projects.html#packa
 
 ## Adding a package
 
-A package is a public git repository (GitHub or any other host reachable over `https://`) with:
+`xq new qr --lib` makes the start of one. A package is a public git repository (GitHub or any other host reachable
+over `https://`) with:
 
 - `xq.toml` at its root, with the package's name, version and the XQ it is written for:
 
