@@ -1,0 +1,12 @@
+# The index of the XQ package registry (https://github.com/akainq/xq-packages), made by tools/build.py from packages/qr.toml.
+
+name = "qr"
+repository = "https://github.com/akainq/xq-qr"
+description = "QR codes: a text as a QR code, drawn as text for a terminal or as SVG"
+license = "MIT OR Apache-2.0"
+
+[[version]]
+version = "0.1.0"
+commit = "3d38fca445787011a7f8dfae376de26eaf8d55b5"
+date = "2026-10-05"
+xq = "0.10"
