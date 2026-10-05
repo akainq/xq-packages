@@ -1,0 +1,76 @@
+# The index of the registry (the branch `index`) and its website (GitHub Pages): on every change of the packages or
+# the tools, every hour (new tags), and by hand.
+name: index
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "23 * * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: index
+  cancel-in-progress: false
+
+jobs:
+  index:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      changed: ${{ steps.publish.outputs.changed }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: The index as it is
+        run: |
+          if git fetch --depth 1 origin index; then
+            git worktree add --detach index FETCH_HEAD
+          else
+            git worktree add --orphan -b index index
+          fi
+
+      - name: The mirrors of the packages' repositories
+        uses: actions/cache@v4
+        with:
+          path: .cache
+          key: mirrors-${{ github.run_id }}
+          restore-keys: mirrors-
+
+      - name: Read the tags of the packages
+        run: python3 tools/build.py --index index --site out/site --cache .cache
+
+      - name: Publish the index
+        id: publish
+        run: |
+          cd index
+          git add -A
+          if git diff --cached --quiet; then
+            echo "The index is as it was."
+          else
+            git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+              commit -q -m "The index, $(date -u +'%Y-%m-%d %H:%M')"
+            git push origin HEAD:refs/heads/index
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: The website
+        if: steps.publish.outputs.changed == 'true' || github.event_name != 'schedule'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: out/site
+
+  pages:
+    needs: index
+    if: needs.index.outputs.changed == 'true' || github.event_name != 'schedule'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v4
